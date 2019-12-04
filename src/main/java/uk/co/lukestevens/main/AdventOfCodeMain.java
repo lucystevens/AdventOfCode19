@@ -6,13 +6,14 @@ import java.util.List;
 
 import uk.co.lukestevens.challenges.Circuit;
 import uk.co.lukestevens.challenges.GravityAssistComputer;
+import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.utils.InputFileReader;
 
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day3Task2();
+		day4Task2();
 
 	}
 	
@@ -71,4 +72,15 @@ public class AdventOfCodeMain {
 		circuit.mapCircuit(wire1, wire2);
 		System.out.println(circuit.findIntersectionWithFewestSteps());
 	}
+	
+	public static void day4Task1() throws IOException {
+		PasswordCracker cracker = new PasswordCracker();
+		System.out.println(cracker.getPasswordsInRange(234208, 765869).size());
+	}
+	
+	public static void day4Task2() throws IOException {
+		PasswordCracker cracker = new PasswordCracker();
+		System.out.println(cracker.getPasswordsInRangeExt(234208, 765869).size());
+	}
+	
 }
