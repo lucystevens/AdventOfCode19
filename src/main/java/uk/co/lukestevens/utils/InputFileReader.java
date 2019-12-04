@@ -35,6 +35,10 @@ public class InputFileReader {
 		return this.readFileAsStream().map(Integer::parseInt).collect(Collectors.toList());
 	}
 	
+	public List<String> readFileAsListOfStrings() throws IOException {
+		return this.readFileAsStream().collect(Collectors.toList());
+	}
+	
 	public int[] readFileAsArrayOfIntegers() throws IOException {
 		String line = this.readFileAsStream().findFirst().get();
 		String[] split = line.split(",");
