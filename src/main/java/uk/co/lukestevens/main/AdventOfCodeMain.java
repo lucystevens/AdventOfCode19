@@ -14,7 +14,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day5Task1();
+		day5Task2();
 
 	}
 	
@@ -90,6 +90,14 @@ public class AdventOfCodeMain {
 		
 		IntCodeComputer computer = new IntCodeComputer(input);
 		computer.run(1);
+	}
+	
+	public static void day5Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day5");
+		int[] input = reader.readFileAsArrayOfIntegers();
+		
+		IntCodeComputer computer = new IntCodeComputer(input);
+		computer.run(5);
 	}
 	
 }
