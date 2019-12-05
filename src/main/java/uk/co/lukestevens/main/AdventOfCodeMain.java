@@ -6,6 +6,7 @@ import java.util.List;
 
 import uk.co.lukestevens.challenges.Circuit;
 import uk.co.lukestevens.challenges.GravityAssistComputer;
+import uk.co.lukestevens.challenges.IntCodeComputer;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.utils.InputFileReader;
@@ -13,7 +14,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day4Task2();
+		day5Task1();
 
 	}
 	
@@ -81,6 +82,14 @@ public class AdventOfCodeMain {
 	public static void day4Task2() throws IOException {
 		PasswordCracker cracker = new PasswordCracker();
 		System.out.println(cracker.getPasswordsInRangeExt(234208, 765869).size());
+	}
+	
+	public static void day5Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day5");
+		int[] input = reader.readFileAsArrayOfIntegers();
+		
+		IntCodeComputer computer = new IntCodeComputer(input);
+		computer.run(1);
 	}
 	
 }
