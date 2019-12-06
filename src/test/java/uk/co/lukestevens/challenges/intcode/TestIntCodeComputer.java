@@ -1,4 +1,4 @@
-package uk.co.lukestevens.challenges;
+package uk.co.lukestevens.challenges.intcode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,8 +9,7 @@ import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 
-import uk.co.lukestevens.challenges.IntCodeComputer.Opcode;
-import uk.co.lukestevens.challenges.IntCodeComputer.OpcodeAction;
+import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.utils.InputFileReader;
 
 public class TestIntCodeComputer {
@@ -21,10 +20,10 @@ public class TestIntCodeComputer {
 		IntCodeComputer comp = new IntCodeComputer(input);
 		
 		Opcode opcode = comp.parseOpcode(1, 0);
-		assertEquals(99, opcode.value);
-		assertEquals(4, opcode.positionForValue);
-		assertEquals(4, opcode.cursorIncrement);
-		assertEquals(OpcodeAction.WRITE, opcode.action);
+		assertEquals(99, opcode.getValue());
+		assertEquals(4, opcode.getPositionForValue());
+		assertEquals(4, opcode.getCursorIncrement());
+		assertEquals(OpcodeAction.WRITE, opcode.getAction());
 	}
 	
 	@Test
