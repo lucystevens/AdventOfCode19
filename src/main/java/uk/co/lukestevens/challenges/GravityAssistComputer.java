@@ -1,52 +1,34 @@
 package uk.co.lukestevens.challenges;
 
+import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
+
 public class GravityAssistComputer {
 	
-	public int[] runOpcode(int[] input) {
-		for(int i = 0; i<input.length;i+=4) {
-			int opcode = input[i];
-			if(opcode == 1) {
-				input[input[i+3]] = input[input[i+1]] + input[input[i+2]];	
-			}
-			else if(opcode == 2) {
-				input[input[i+3]] = input[input[i+1]] * input[input[i+2]];	
-			}
-			else if(opcode == 99) {
-				return input;
-			}
-			else {
-				return new int[] {-1};
-			}
-		}
-		
-		return input;
+	private final IntCodeComputer computer;
+			
+	public GravityAssistComputer(int[] input) {
+		this.computer = new IntCodeComputer(input);
 	}
 	
-	public int runOpcodeWithInputs(int noun, int verb, int[] opcode) {
-		opcode[1] = noun;
-		opcode[2] = verb;
-		return runOpcode(opcode)[0];
+	public int[] run() {
+		this.computer.run(0);
+		return this.computer.getMemory().getBuffer();
 	}
 	
-	public int findInputsForValue(int output, int[] opcode) {
+	public int run(int noun, int verb) {
+		return this.computer.run(noun, verb);
+	}
+	
+	public int findInputsForValue(int output) {
 		for(int noun = 0;noun < 100; noun++) {
 			for(int verb = 0; verb < 100; verb++) {
-				int[] newOpcode = cloneOpcode(opcode);
-				int actualOutput = this.runOpcodeWithInputs(noun, verb, newOpcode);
+				int actualOutput = this.run(noun, verb);
 				if(actualOutput == output) {
 					return (100 * noun) + verb;
 				}
 			}
 		}
 		return -1;
-	}
-	
-	int[] cloneOpcode(int[] opcode) {
-		int[] clone = new int[opcode.length];
-		for(int i = 0; i<opcode.length; i++) {
-			clone[i] = opcode[i];
-		}
-		return clone;
 	}
 
 }

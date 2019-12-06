@@ -4,9 +4,9 @@ import java.util.function.Consumer;
 
 public class IntCodeComputer {
 	
-	final int[] program;
-	IntCodeComputerMemory memory;
-	Consumer<Integer> outputCallback;
+	private final int[] program;
+	private IntCodeComputerMemory memory;
+	private Consumer<Integer> outputCallback;
 		
 	public IntCodeComputer(int[] program) {
 		this(program, System.out::println);
@@ -19,9 +19,24 @@ public class IntCodeComputer {
 		this.outputCallback = outputCallback;
 	}
 
+	public IntCodeComputerMemory getMemory() {
+		return memory;
+	}
+
+	public int run(int noun, int verb) {
+		this.memory = new IntCodeComputerMemory(program);
+		this.memory.setValue(1, noun);
+		this.memory.setValue(2, verb);
+		this.runInternal(0);
+		return this.memory.getValue(0);
+	}
+
 	public void run(int input) {
 		this.memory = new IntCodeComputerMemory(program);
-		
+		this.runInternal(input);
+	}
+	
+	void runInternal(int input) {
 		while(this.memory.hasNext()) {
 			Opcode opcode = this.parseOpcode(input);
 			if(opcode.getAction() == OpcodeAction.WRITE) {

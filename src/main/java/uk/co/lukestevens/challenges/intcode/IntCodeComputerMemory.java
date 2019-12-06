@@ -4,8 +4,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IntCodeComputerMemory {
 	
-	final int[] memory;
-	final AtomicInteger cursor = new AtomicInteger();
+	private final int[] memory;
+	private final AtomicInteger cursor = new AtomicInteger();
 	
 	public IntCodeComputerMemory(int[] program) {
 		this.memory = new int[program.length];
@@ -53,5 +53,11 @@ public class IntCodeComputerMemory {
 	public boolean hasNext() {
 		return cursor.get() < memory.length;
 	}
+
+	public int[] getBuffer() {
+		return memory;
+	}
+	
+	
 
 }

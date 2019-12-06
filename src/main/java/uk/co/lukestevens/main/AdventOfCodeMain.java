@@ -39,16 +39,16 @@ public class AdventOfCodeMain {
 		InputFileReader reader = new InputFileReader("Day2");
 		int[] input = reader.readFileAsArrayOfIntegers();
 		
-		GravityAssistComputer computer = new GravityAssistComputer();
-		System.out.println(computer.runOpcodeWithInputs(12, 2, input));
+		GravityAssistComputer computer = new GravityAssistComputer(input);
+		System.out.println(computer.run(12, 2));
 	}
 	
 	public static void day2Task2() throws IOException {
 		InputFileReader reader = new InputFileReader("Day2");
 		int[] input = reader.readFileAsArrayOfIntegers();
 		
-		GravityAssistComputer computer = new GravityAssistComputer();
-		System.out.println(computer.findInputsForValue(19690720, input));
+		GravityAssistComputer computer = new GravityAssistComputer(input);
+		System.out.println(computer.findInputsForValue(19690720));
 	}
 	
 	public static void day3Task1() throws IOException {
