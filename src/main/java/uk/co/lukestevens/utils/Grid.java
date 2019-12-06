@@ -2,6 +2,8 @@ package uk.co.lukestevens.utils;
 
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 public class Grid<T> {
 	
@@ -70,6 +72,13 @@ public class Grid<T> {
 	 */
 	public T get(int x, int y) {
 		return this.get(new Point(x, y));
+	}
+	
+	/**
+	 * @return A sequential stream with the collection backing this Grid as it's source
+	 */
+	public Stream<Entry<Point, T>> stream(){
+		return this.internalMap.entrySet().stream();
 	}
 
 }

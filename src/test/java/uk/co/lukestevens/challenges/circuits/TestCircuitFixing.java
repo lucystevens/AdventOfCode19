@@ -1,4 +1,4 @@
-package uk.co.lukestevens.challenges;
+package uk.co.lukestevens.challenges.circuits;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
+import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.utils.InputFileReader;
 
 public class TestCircuitFixing {

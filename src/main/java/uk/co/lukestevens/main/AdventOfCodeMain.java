@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.co.lukestevens.challenges.Circuit;
 import uk.co.lukestevens.challenges.GravityAssistComputer;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
+import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.utils.InputFileReader;
