@@ -1,4 +1,4 @@
-package uk.co.lukestevens.challenges;
+package uk.co.lukestevens.challenges.orbits;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,11 +9,11 @@ import java.util.Set;
 
 import uk.co.lukestevens.utils.Wrapper;
 
-public class OrbitalMapper {
+public class OrbitalMap {
 	
 	final Map<String, OrbitingObject> orbits = new HashMap<>();
 	
-	public OrbitalMapper(List<String> orbits) {
+	public OrbitalMap(List<String> orbits) {
 		this.buildOrbitMap(orbits);
 	}
 	
@@ -31,7 +31,7 @@ public class OrbitalMapper {
 	}
 	
 	public int getTotalNumberOfOrbits() {
-		return this.orbits.values().stream().mapToInt(OrbitingObject::getTotalOrbits).sum();
+		return this.orbits.values().stream().mapToInt(OrbitingObject::calculateTotalOrbits).sum();
 	}
 
 	public int getOrbitalTransfers(String start, String finish) {
@@ -48,7 +48,7 @@ public class OrbitalMapper {
 		Set<OrbitingObject> newTraversedOrbits = new HashSet<>(traversedOrbits);
 		newTraversedOrbits.add(start);
 		
-		List<OrbitingObject> bodiesToCheck = new ArrayList<>(start.orbitingBodies);
+		List<OrbitingObject> bodiesToCheck = new ArrayList<>(start.getOrbitingBodies());
 		if(start.hasDirectOrbit()) {
 			bodiesToCheck.add(start.getDirectOrbit());
 		}
@@ -64,50 +64,6 @@ public class OrbitalMapper {
 			});
 		
 		return minimumTransfers.isNull()? -10 : minimumTransfers.get();
-	}
-	
-	public class OrbitingObject {
-		
-		String identifier;
-		OrbitingObject directOrbit;
-		List<OrbitingObject> orbitingBodies = new ArrayList<>();
-		
-		public OrbitingObject(String identifier) {
-			this.identifier = identifier;
-		}
-		
-		public void setDirectOrbit(OrbitingObject directOrbit) {
-			this.directOrbit = directOrbit;
-			this.directOrbit.addOrbitingBody(this);
-		}
-
-		public String getIdentifier() {
-			return identifier;
-		}
-		
-		public boolean hasDirectOrbit() {
-			return directOrbit != null;
-		}
-
-		public OrbitingObject getDirectOrbit() {
-			return directOrbit;
-		}
-		
-		public void addOrbitingBody(OrbitingObject body) {
-			this.orbitingBodies.add(body);
-		}
-		
-		public int getTotalOrbits() {
-			int totalOrbits = 0;
-			OrbitingObject parent = this.directOrbit;
-			while(parent != null) {
-				parent = parent.getDirectOrbit();
-				totalOrbits ++;
-			}
-			return totalOrbits;
-		}
-	
-		
 	}
 
 }

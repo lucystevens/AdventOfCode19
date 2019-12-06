@@ -7,9 +7,9 @@ import java.util.List;
 import uk.co.lukestevens.challenges.Circuit;
 import uk.co.lukestevens.challenges.GravityAssistComputer;
 import uk.co.lukestevens.challenges.IntCodeComputer;
-import uk.co.lukestevens.challenges.OrbitalMapper;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
+import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.utils.InputFileReader;
 
 public class AdventOfCodeMain {
@@ -105,7 +105,7 @@ public class AdventOfCodeMain {
 		InputFileReader reader = new InputFileReader("Day6");
 		List<String> input = reader.readFileAsListOfStrings();
 		
-		OrbitalMapper mapper = new OrbitalMapper(input);
+		OrbitalMap mapper = new OrbitalMap(input);
 		System.out.println(mapper.getTotalNumberOfOrbits());
 	}
 	
@@ -113,7 +113,7 @@ public class AdventOfCodeMain {
 		InputFileReader reader = new InputFileReader("Day6");
 		List<String> input = reader.readFileAsListOfStrings();
 		
-		OrbitalMapper mapper = new OrbitalMapper(input);
+		OrbitalMap mapper = new OrbitalMap(input);
 		System.out.println(mapper.getOrbitalTransfers("YOU", "SAN"));
 	}
 	

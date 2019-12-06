@@ -1,4 +1,4 @@
-package uk.co.lukestevens.challenges;
+package uk.co.lukestevens.challenges.orbits;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,13 +9,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.utils.InputFileReader;
 
-public class TestOrbitalMapper {
+public class TestOrbitalMap {
 	
 	@Test
 	public void sequentialTotalOrbitsTest() {
-		OrbitalMapper mapper = new OrbitalMapper(Arrays.asList(
+		OrbitalMap mapper = new OrbitalMap(Arrays.asList(
 				"COM)B",
 				"B)C",
 				"C)D",
@@ -48,22 +49,22 @@ public class TestOrbitalMapper {
 				"K)L"
 		);
 		Collections.shuffle(input);
-		OrbitalMapper mapper = new OrbitalMapper(input);
+		OrbitalMap mapper = new OrbitalMap(input);
 		assertEquals(42, mapper.getTotalNumberOfOrbits());
 	}
 	
 	@Test
-	public static void testTask1() throws IOException {
+	public void testTask1() throws IOException {
 		InputFileReader reader = new InputFileReader("Day6");
 		List<String> input = reader.readFileAsListOfStrings();
 		
-		OrbitalMapper mapper = new OrbitalMapper(input);
+		OrbitalMap mapper = new OrbitalMap(input);
 		assertEquals(110190, mapper.getTotalNumberOfOrbits());
 	}
 	
 	@Test
 	public void sequentialTransferTimeTest() {
-		OrbitalMapper mapper = new OrbitalMapper(Arrays.asList(
+		OrbitalMap mapper = new OrbitalMap(Arrays.asList(
 				"COM)B",
 				"B)C",
 				"C)D",
@@ -100,8 +101,17 @@ public class TestOrbitalMapper {
 				"I)SAN"
 		);
 		Collections.shuffle(input);
-		OrbitalMapper mapper = new OrbitalMapper(input);
+		OrbitalMap mapper = new OrbitalMap(input);
 		assertEquals(4, mapper.getOrbitalTransfers("YOU", "SAN"));
+	}
+	
+	@Test
+	public void testTask2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day6");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		OrbitalMap mapper = new OrbitalMap(input);
+		assertEquals(343, mapper.getOrbitalTransfers("YOU", "SAN"));
 	}
 
 }
