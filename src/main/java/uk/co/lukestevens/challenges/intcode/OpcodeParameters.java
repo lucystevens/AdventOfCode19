@@ -5,14 +5,12 @@ import java.util.List;
 
 public class OpcodeParameters {
 	
-	private int[] memory;
-	private int cursor;
+	private IntCodeComputerMemory memory;
 	private List<ParameterMode> modes = new ArrayList<>();
 	private int command;
 
-	public OpcodeParameters(String opcode, int[] memory, int cursor) {
+	public OpcodeParameters(String opcode, IntCodeComputerMemory memory) {
 		this.memory = memory;
-		this.cursor = cursor;
 		
 		if(opcode.length() > 1 && !opcode.endsWith("99")) {
 			this.command = Integer.parseInt(opcode.substring(opcode.length() - 2, opcode.length()));
@@ -31,7 +29,7 @@ public class OpcodeParameters {
 	}
 	
 	public int getParameterValue(int index) {
-		return this.getParameterMode(index).getValue(memory, memory[cursor + index]);
+		return this.getParameterMode(index).getValue(memory, memory.getOffsetValue(index));
 	}
 	
 	public ParameterMode getParameterMode(int index) {

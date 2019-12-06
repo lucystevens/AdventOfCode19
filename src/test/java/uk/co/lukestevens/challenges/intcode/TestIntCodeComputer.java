@@ -19,7 +19,7 @@ public class TestIntCodeComputer {
 		int[] input = {1002,4,3,4,33,99};
 		IntCodeComputer comp = new IntCodeComputer(input);
 		
-		Opcode opcode = comp.parseOpcode(1, 0);
+		Opcode opcode = comp.parseOpcode(1);
 		assertEquals(99, opcode.getValue());
 		assertEquals(4, opcode.getPositionForValue());
 		assertEquals(4, opcode.getCursorIncrement());
