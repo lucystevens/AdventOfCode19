@@ -36,7 +36,7 @@ public class Circuit {
 				.stream()
 				.filter(e -> e.getValue().isIntersection())
 				.map(Entry::getValue)
-				.mapToInt(data -> data.getWire1Steps() + data.getWire2Steps())
+				.mapToInt(GridData::getTotalSteps)
 				.sorted()
 				.findFirst()
 				.getAsInt();
@@ -46,20 +46,21 @@ public class Circuit {
 		return Math.abs(centralPort.x - location.x) + Math.abs(centralPort.y - location.y);
 	}
 	
-	public void mapCircuit(List<String> wire1, List<String> wire2){
-		this.mapWire(wire1, Wire.WIRE_1, Wire.WIRE_2);
-		this.mapWire(wire2, Wire.WIRE_2, Wire.WIRE_1);
-	}
-	
-	void mapWire(List<String> wire, Wire thisWire, Wire otherWire) {
-		Point currentPoint = centralPort;
-		AtomicInteger steps = new AtomicInteger(0);
-		for(String command : wire) {
-			currentPoint = this.mapWireCommand(currentPoint, command, thisWire, otherWire, steps);
+	public void mapCircuits(List<List<String>> wires){
+		for(int i = 0; i<wires.size(); i++) {
+			this.mapWire(wires.get(i), i);
 		}
 	}
 	
-	Point mapWireCommand(Point lastWireLocation, String command, Wire wire, Wire otherWire, AtomicInteger steps) {
+	void mapWire(List<String> wire, Integer thisWire) {
+		Point currentPoint = centralPort;
+		AtomicInteger steps = new AtomicInteger(0);
+		for(String command : wire) {
+			currentPoint = this.mapWireCommand(currentPoint, command, thisWire, steps);
+		}
+	}
+	
+	Point mapWireCommand(Point lastWireLocation, String command, Integer wire, AtomicInteger steps) {
 		int distance = Integer.parseInt(command.replaceAll("\\D+", ""));
 		String direction = command.replaceAll("\\d+", "");
 		
@@ -75,7 +76,7 @@ public class Circuit {
 				atPosition.setWireSteps(wire, steps.get());
 				grid.set(location, atPosition);
 			}
-			else if(atPosition.hasWire(otherWire)) {
+			else if(!atPosition.hasWire(wire)) {
 				atPosition.setWireSteps(wire, steps.get());
 				grid.set(location, atPosition);
 			}
