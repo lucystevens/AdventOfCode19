@@ -7,6 +7,7 @@ import java.util.List;
 import uk.co.lukestevens.challenges.Circuit;
 import uk.co.lukestevens.challenges.GravityAssistComputer;
 import uk.co.lukestevens.challenges.IntCodeComputer;
+import uk.co.lukestevens.challenges.OrbitalMapper;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.utils.InputFileReader;
@@ -14,7 +15,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day5Task2();
+		day6Task2();
 
 	}
 	
@@ -98,6 +99,22 @@ public class AdventOfCodeMain {
 		
 		IntCodeComputer computer = new IntCodeComputer(input);
 		computer.run(5);
+	}
+	
+	public static void day6Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day6");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		OrbitalMapper mapper = new OrbitalMapper(input);
+		System.out.println(mapper.getTotalNumberOfOrbits());
+	}
+	
+	public static void day6Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day6");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		OrbitalMapper mapper = new OrbitalMapper(input);
+		System.out.println(mapper.getOrbitalTransfers("YOU", "SAN"));
 	}
 	
 }
