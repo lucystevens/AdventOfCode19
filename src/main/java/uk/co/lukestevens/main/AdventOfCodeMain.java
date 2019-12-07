@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import uk.co.lukestevens.challenges.GravityAssistComputer;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
+import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
 import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
@@ -16,7 +17,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day6Task2();
+		day7Task2();
 
 	}
 	
@@ -111,5 +112,23 @@ public class AdventOfCodeMain {
 		OrbitalMap mapper = new OrbitalMap(input);
 		System.out.println(mapper.getOrbitalTransfers("YOU", "SAN"));
 	}
+	
+	public static void day7Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day7");
+		int[] input = reader.readFileAsArrayOfIntegers();
+		
+		AmplifierController controller = new AmplifierController(input);
+		System.out.println(controller.findMaxThrusterSignal(5));
+	}
+	
+	public static void day7Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day7");
+		int[] input = reader.readFileAsArrayOfIntegers();
+		
+		AmplifierController controller = new AmplifierController(input);
+		System.out.println(controller.findMaxThrusterSignalRewired(5));
+	}
+	
+	
 	
 }

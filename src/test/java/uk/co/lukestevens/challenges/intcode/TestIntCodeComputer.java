@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.utils.InputFileReader;
+import uk.co.lukestevens.utils.ListWithCursor;
 
 public class TestIntCodeComputer {
 	
@@ -19,7 +20,7 @@ public class TestIntCodeComputer {
 		int[] input = {1002,4,3,4,33,99};
 		IntCodeComputer comp = new IntCodeComputer(input);
 		
-		Opcode opcode = comp.parseOpcode(1);
+		Opcode opcode = comp.parseOpcode(new ListWithCursor<>(1));
 		assertEquals(99, opcode.getValue());
 		assertEquals(4, opcode.getPositionForValue());
 		assertEquals(4, opcode.getCursorIncrement());
