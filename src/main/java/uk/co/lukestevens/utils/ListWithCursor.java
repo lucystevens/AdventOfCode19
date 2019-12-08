@@ -14,6 +14,7 @@ public class ListWithCursor<T> {
 		this.list = list;
 	};
 	
+	@SafeVarargs
 	public ListWithCursor(T...values) {
 		this(Arrays.asList(values));
 	}

@@ -2,6 +2,7 @@ package uk.co.lukestevens.challenges;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
+import uk.co.lukestevens.utils.InputFileReader;
 import uk.co.lukestevens.utils.Utils;
 
 public class TestAmplifierController {
@@ -90,6 +92,15 @@ public class TestAmplifierController {
 		
 		AmplifierController controller = new AmplifierController(program);
 		assertEquals(18216, controller.runRewired(phaseSettings));
+	}
+	
+	//@Test Ignore test for now as it takes too long
+	public static void testTask2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day7");
+		int[] input = reader.readFileAsArrayOfIntegers();
+		
+		AmplifierController controller = new AmplifierController(input);
+		assertEquals(3321777, controller.findMaxThrusterSignalRewired(5));
 	}
 	
 	

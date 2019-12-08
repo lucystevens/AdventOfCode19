@@ -80,5 +80,21 @@ public class Grid<T> {
 	public Stream<Entry<Point, T>> stream(){
 		return this.internalMap.entrySet().stream();
 	}
+	
+	@Override
+	public String toString() {
+		int maxX = (this.stream().map(Entry::getKey).map(Point::getX).sorted((d1, d2) -> (int)(d2-d1)).findFirst().get()).intValue();
+		int maxY = (this.stream().map(Entry::getKey).map(Point::getY).sorted((d1, d2) -> (int)(d2-d1)).findFirst().get()).intValue();
+		
+		StringBuilder builder = new StringBuilder();
+		for(int y = 0; y <= maxY; y++) {
+			for(int x = 0; x <= maxX; x++) {
+				T value = this.get(x, y);
+				builder.append(value == null? " " : value.toString());
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
 
 }

@@ -12,12 +12,14 @@ import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
 import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
+import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
+import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.InputFileReader;
 
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day7Task2();
+		day8Task2();
 
 	}
 	
@@ -127,6 +129,28 @@ public class AdventOfCodeMain {
 		
 		AmplifierController controller = new AmplifierController(input);
 		System.out.println(controller.findMaxThrusterSignalRewired(5));
+	}
+	
+	public static void day8Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day8");
+		List<String> input = reader.readFileAsListOfStrings();
+		List<Integer> format = input.get(0).chars().mapToObj(i -> i-48).collect(Collectors.toList());
+		
+		SpaceImage image = new SpaceImage(25, 6, format);
+		Grid<Integer> layer = image.getLayerWithFewestZeroes();
+		
+		long ones = image.getDigitCountOnLayer(layer, 1);
+		long twos = image.getDigitCountOnLayer(layer, 2);
+		System.out.println(ones * twos);
+	}
+	
+	public static void day8Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day8");
+		List<String> input = reader.readFileAsListOfStrings();
+		List<Integer> format = input.get(0).chars().mapToObj(i -> i-48).collect(Collectors.toList());
+		
+		SpaceImage image = new SpaceImage(25, 6, format);
+		System.out.println(image.getDecodedImage().toString().replaceAll("0", " ").replaceAll("1", "x"));
 	}
 	
 	
