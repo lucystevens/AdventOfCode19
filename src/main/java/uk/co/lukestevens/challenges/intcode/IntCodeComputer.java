@@ -30,8 +30,8 @@ public class IntCodeComputer {
 		this.inputSource.add(input);
 	}
 
-	public int run() {
-		while(this.memory.hasNext()) {
+	public void run() {
+		while(true) {
 			Opcode opcode = this.parseOpcode();
 			if(opcode.getAction() == OpcodeAction.WRITE) {
 				this.memory.setValue(opcode.getPositionForValue(), opcode.getValue());
@@ -40,14 +40,13 @@ public class IntCodeComputer {
 				this.outputCallback.accept(opcode.getValue());
 			}
 			else if(opcode.getAction() == OpcodeAction.HALT) {
-				return 0;
+				return;
 			}
 			else if(opcode.getAction() == OpcodeAction.JUMP) {
 				this.memory.jumpCursor(opcode.getPositionForValue());
 			}
 			this.memory.incrementCursor(opcode.getCursorIncrement());
 		}
-		return 1;
 	}
 	
 	Opcode parseOpcode() {

@@ -31,6 +31,7 @@ public class IntCodeComputerMemory {
 	
 	// Single point of entry
 	public int getValue(int index) {
+		this.padToIndex(index);
 		return memory.get(index);
 	}
 	
@@ -48,6 +49,7 @@ public class IntCodeComputerMemory {
 	
 	// Single point of entry
 	public void setValue(int index, int value) {
+		this.padToIndex(index);
 		memory.set(index, value);
 	}
 	
@@ -71,14 +73,18 @@ public class IntCodeComputerMemory {
 		cursor.set(position);
 	}
 	
-	public boolean hasNext() {
+	/*public boolean hasNext() {
 		return cursor.get() < memory.size();
-	}
+	}*/
 
 	public Integer[] getBuffer() {
 		return memory.toArray(new Integer[0]);
 	}
 	
-	
+	private void padToIndex(int index) {
+		while(index >= this.memory.size()) {
+			this.memory.add(0);
+		}
+	}
 
 }
