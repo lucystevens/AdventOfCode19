@@ -6,13 +6,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IntCodeComputerMemory {
 	
-	private final List<Integer> memory;
+	private final List<Long> memory;
 	private final AtomicInteger cursor = new AtomicInteger();
 	private int relativeBase = 0;
 	
-	public IntCodeComputerMemory(int[] program) {
-		this.memory = new ArrayList<Integer>();
-		for(int i : program) {
+	public IntCodeComputerMemory(Long[] program) {
+		this.memory = new ArrayList<Long>();
+		for(Long i : program) {
 			memory.add(i);
 		}
 	}
@@ -30,34 +30,34 @@ public class IntCodeComputerMemory {
 	}
 	
 	// Single point of entry
-	public int getValue(int index) {
+	public Long getValue(int index) {
 		this.padToIndex(index);
 		return memory.get(index);
 	}
 	
-	public int getRelativeValue(int offset) {
+	public Long getRelativeValue(int offset) {
 		return this.getValue(this.relativeBase + offset);
 	}
 	
-	public int getOffsetValue(int offset) {
+	public Long getOffsetValue(int offset) {
 		return this.getValue(cursor.get() + offset);
 	}
 	
-	public int getValue() {
+	public Long getValue() {
 		return this.getValue(cursor.get());
 	}
 	
 	// Single point of entry
-	public void setValue(int index, int value) {
+	public void setValue(int index, Long value) {
 		this.padToIndex(index);
 		memory.set(index, value);
 	}
 	
-	public void setOffsetValue(int offset, int value) {
+	public void setOffsetValue(int offset, Long value) {
 		this.setValue(cursor.get() + offset, value);
 	}
 	
-	public void setValue(int value) {
+	public void setValue(Long value) {
 		this.setValue(cursor.get(), value);
 	}
 	
@@ -77,13 +77,13 @@ public class IntCodeComputerMemory {
 		return cursor.get() < memory.size();
 	}*/
 
-	public Integer[] getBuffer() {
-		return memory.toArray(new Integer[0]);
+	public List<Long> getBuffer() {
+		return memory;
 	}
 	
 	private void padToIndex(int index) {
 		while(index >= this.memory.size()) {
-			this.memory.add(0);
+			this.memory.add(0L);
 		}
 	}
 

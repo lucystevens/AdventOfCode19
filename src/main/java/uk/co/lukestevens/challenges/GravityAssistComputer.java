@@ -1,5 +1,7 @@
 package uk.co.lukestevens.challenges;
 
+import java.util.List;
+
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerMemory;
@@ -12,19 +14,24 @@ public class GravityAssistComputer {
 		this.factory = new IntCodeComputerFactory(input);
 	}
 	
-	public Integer[] run() {
+	public int[] run() {
 		IntCodeComputer computer = factory.createComputer();
 		computer.run();
-		return computer.getMemory().getBuffer();
+		List<Long> buffer = computer.getMemory().getBuffer();
+		int[] result = new int[buffer.size()];
+		for(int i = 0; i<buffer.size(); i++) {
+			result[i] = buffer.get(i).intValue();
+		}
+		return result;
 	}
 	
 	public int run(int noun, int verb) {
 		IntCodeComputer computer = factory.createComputer();
 		IntCodeComputerMemory memory = computer.getMemory();
-		memory.setValue(1, noun);
-		memory.setValue(2, verb);
+		memory.setValue(1, Long.valueOf(noun));
+		memory.setValue(2, Long.valueOf(verb));
 		computer.run();
-		return computer.getMemory().getValue(0);
+		return computer.getMemory().getValue(0).intValue();
 	}
 	
 	public int findInputsForValue(int output) {

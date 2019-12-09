@@ -20,7 +20,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day8Task2();
+		day9Task2();
 
 	}
 	
@@ -90,7 +90,7 @@ public class AdventOfCodeMain {
 		
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		IntCodeComputer computer = factory.createComputer();
-		computer.addInput(1);
+		computer.addInput(1L);
 		computer.run();
 	}
 	
@@ -100,7 +100,7 @@ public class AdventOfCodeMain {
 		
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		IntCodeComputer computer = factory.createComputer();
-		computer.addInput(5);
+		computer.addInput(5L);
 		computer.run();
 	}
 	
@@ -158,6 +158,24 @@ public class AdventOfCodeMain {
 		System.out.println(image.getDecodedImage().toString().replaceAll("0", " ").replaceAll("1", "x"));
 	}
 	
+	public static void day9Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day9");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
+		IntCodeComputer computer = factory.createComputer();
+		computer.addInput(1L);
+		computer.run();
+	}
 	
+	public static void day9Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day9");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
+		IntCodeComputer computer = factory.createComputer();
+		computer.addInput(2L);
+		computer.run();
+	}
 	
 }

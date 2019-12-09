@@ -19,7 +19,7 @@ public class TestIntCodeComputer {
 		
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		IntCodeComputer computer = factory.createComputer();
-		computer.addInput(1);
+		computer.addInput(1L);
 		
 		Opcode opcode = computer.parseOpcode();
 		assertEquals(99, opcode.getValue());
@@ -30,14 +30,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testTask1() throws IOException {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		InputFileReader reader = new InputFileReader("Day5");
 		int[] input = reader.readFileAsArrayOfIntegers();
 		
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		IntCodeComputer computer = factory.createComputer();
 		computer.setOutputCallback(outputs::add);
-		computer.addInput(1);
+		computer.addInput(1L);
 		computer.run();
 		
 		assertEquals(0, outputs.get(0));
@@ -54,14 +54,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testInputIsEqualTo8_positionMode() {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		int[] input = {3,9,8,9,10,9,4,9,99,-1,8};
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(0, outputs.get(0));
 		}
@@ -69,7 +69,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(8);
+			computer.addInput(8L);
 			computer.run();
 			assertEquals(1, outputs.get(1));
 		}
@@ -77,14 +77,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testInputIsLessThan8_positionMode() {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		int[] input = {3,9,7,9,10,9,4,9,99,-1,8};
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(1, outputs.get(0));
 		}
@@ -92,7 +92,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(8);
+			computer.addInput(8L);
 			computer.run();
 			assertEquals(0, outputs.get(1));
 		}
@@ -100,14 +100,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testInputIsEqualTo8_immediateMode() {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		int[] input = {3,3,1108,-1,8,3,4,3,99};
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(0, outputs.get(0));
 		}
@@ -115,7 +115,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(8);
+			computer.addInput(8L);
 			computer.run();
 			assertEquals(1, outputs.get(1));
 		}
@@ -123,14 +123,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testInputIsLessThan8_immediateMode() {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		int[] input = {3,3,1107,-1,8,3,4,3,99};
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(1, outputs.get(0));
 		}
@@ -138,7 +138,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(8);
+			computer.addInput(8L);
 			computer.run();
 			assertEquals(0, outputs.get(1));
 		}
@@ -146,14 +146,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testInputIsNonZero_positionMode() {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		int[] input = {3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9};
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(1, outputs.get(0));
 		}
@@ -161,7 +161,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(0);
+			computer.addInput(0L);
 			computer.run();
 			assertEquals(0, outputs.get(1));
 		}
@@ -169,7 +169,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(1);
+			computer.addInput(1L);
 			computer.run();
 			assertEquals(1, outputs.get(2));
 		}
@@ -177,14 +177,14 @@ public class TestIntCodeComputer {
 	
 	@Test
 	public void testInputIsNonZero_immediateMode() {
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		int[] input = {3,3,1105,-1,9,1101,0,0,12,4,12,99,1};
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(1, outputs.get(0));
 		}
@@ -192,7 +192,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(0);
+			computer.addInput(0L);
 			computer.run();
 			assertEquals(0, outputs.get(1));
 		}
@@ -200,7 +200,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(1);
+			computer.addInput(1L);
 			computer.run();
 			assertEquals(1, outputs.get(2));
 		}
@@ -212,13 +212,13 @@ public class TestIntCodeComputer {
 				1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
 				999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99};
 		
-		List<Integer> outputs = new ArrayList<>();
+		List<Long> outputs = new ArrayList<>();
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(-1);
+			computer.addInput(-1L);
 			computer.run();
 			assertEquals(999, outputs.get(0));
 		}
@@ -226,7 +226,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(7);
+			computer.addInput(7L);
 			computer.run();
 			assertEquals(999, outputs.get(1));
 		}
@@ -234,7 +234,7 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(8);
+			computer.addInput(8L);
 			computer.run();
 			assertEquals(1000, outputs.get(2));
 		}
@@ -242,21 +242,21 @@ public class TestIntCodeComputer {
 		{
 			IntCodeComputer computer = factory.createComputer();
 			computer.setOutputCallback(outputs::add);
-			computer.addInput(9);
+			computer.addInput(9L);
 			computer.run();
 			assertEquals(1001, outputs.get(3));
 		}
 	}
 	
 	public static void testTask2() throws IOException {
-		Consumer<Integer> callback = i -> assertEquals(3508186, 1);
+		Consumer<Long> callback = i -> assertEquals(3508186, 1);
 		InputFileReader reader = new InputFileReader("Day5");
 		int[] input = reader.readFileAsArrayOfIntegers();
 		
 		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
 		IntCodeComputer computer = factory.createComputer();
 		computer.setOutputCallback(callback);
-		computer.addInput(5);
+		computer.addInput(5L);
 		computer.run();
 	}
 

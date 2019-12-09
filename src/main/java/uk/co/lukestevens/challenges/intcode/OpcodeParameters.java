@@ -29,7 +29,7 @@ public class OpcodeParameters {
 		return command;
 	}
 	
-	public int getParameterValue(int index) {
+	public Long getParameterValue(int index) {
 		return this.getParameterMode(index).getValue(memory, memory.getOffsetValue(index));
 	}
 	

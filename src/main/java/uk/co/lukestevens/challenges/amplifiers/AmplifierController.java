@@ -21,33 +21,33 @@ public class AmplifierController {
 	}
 	
 	public int run(List<Integer> phaseSettings) {
-		int nextInput = 0;
+		Long nextInput = 0L;
 		for(int phaseSetting : phaseSettings) {
 			IntCodeComputer tempComputer = this.factory.createComputer();
-			Wrapper<Integer> outputBuffer = new Wrapper<>();
+			Wrapper<Long> outputBuffer = new Wrapper<>();
 			
 			tempComputer.setOutputCallback(outputBuffer::set);
-			tempComputer.addInput(phaseSetting);
+			tempComputer.addInput(Long.valueOf(phaseSetting));
 			tempComputer.addInput(nextInput);
 			tempComputer.run();
 			
 			nextInput = outputBuffer.get();
 		}
-		return nextInput;
+		return nextInput.intValue();
 	}
 	
 	public int runRewired(List<Integer> phaseSettings) {
-		Map<Integer, Integer> outputMap = new HashMap<>();
+		Map<Integer, Long> outputMap = new HashMap<>();
 		List<Thread> threads = new ArrayList<>();
 		
 		List<IntCodeComputer> comps = phaseSettings.stream()
 				.map(phaseSetting -> {
 					IntCodeComputer tempComputer = this.factory.createComputer();
-					tempComputer.addInput(phaseSetting);
+					tempComputer.addInput(Long.valueOf(phaseSetting));
 					return tempComputer;
 		}).collect(Collectors.toList());
 		
-		comps.get(0).addInput(0);
+		comps.get(0).addInput(0L);
 		
 		for(int i = 0; i<comps.size(); i++) {
 			IntCodeComputer tempComputer = comps.get(i);
@@ -70,7 +70,7 @@ public class AmplifierController {
 			}
 		}
 		
-		return outputMap.get(comps.size() - 1);
+		return outputMap.get(comps.size() - 1).intValue();
 		
 	}
 	

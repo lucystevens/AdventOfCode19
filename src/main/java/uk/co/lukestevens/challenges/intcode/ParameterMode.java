@@ -3,18 +3,18 @@ package uk.co.lukestevens.challenges.intcode;
 public enum ParameterMode {
 	POSITION(){
 		@Override
-		public int getValue(IntCodeComputerMemory memory, int parameter) {
-			return memory.getValue(parameter);
+		public Long getValue(IntCodeComputerMemory memory, Long parameter) {
+			return memory.getValue(parameter.intValue());
 		}
 
 		@Override
 		public int getLocation(IntCodeComputerMemory memory, int index) {
-			return memory.getOffsetValue(index);
+			return memory.getOffsetValue(index).intValue();
 		}
 	},
 	IMMEDIATE(){
 		@Override
-		public int getValue(IntCodeComputerMemory memory, int parameter) {
+		public Long getValue(IntCodeComputerMemory memory, Long parameter) {
 			return parameter;
 		}
 
@@ -25,14 +25,14 @@ public enum ParameterMode {
 	},
 	RELATIVE(){
 		@Override
-		public int getValue(IntCodeComputerMemory memory, int parameter) {
-			return memory.getRelativeValue(parameter);
+		public Long getValue(IntCodeComputerMemory memory, Long parameter) {
+			return memory.getRelativeValue(parameter.intValue());
 		}
 
 		@Override
 		public int getLocation(IntCodeComputerMemory memory, int index) {
-			int offset = memory.getOffsetValue(index);
-			return memory.getRelativeBase() + offset;
+			Long offset = memory.getOffsetValue(index);
+			return memory.getRelativeBase() + offset.intValue();
 		}
 	};
 	
@@ -45,7 +45,7 @@ public enum ParameterMode {
 		}
 	}
 	
-	public abstract int getValue(IntCodeComputerMemory memory, int parameter);
+	public abstract Long getValue(IntCodeComputerMemory memory, Long parameter);
 	
 	public abstract int getLocation(IntCodeComputerMemory memory, int index);
 

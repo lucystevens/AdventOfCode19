@@ -48,5 +48,15 @@ public class InputFileReader {
 		}
 		return result;
 	}
+	
+	public Long[] readFileAsArrayOfLongs() throws IOException {
+		String line = this.readFileAsStream().findFirst().get();
+		String[] split = line.split(",");
+		Long[] result = new Long[split.length];
+		for(int i = 0; i<split.length; i++) {
+			result[i] = Long.valueOf(split[i]);
+		}
+		return result;
+	}
 
 }
