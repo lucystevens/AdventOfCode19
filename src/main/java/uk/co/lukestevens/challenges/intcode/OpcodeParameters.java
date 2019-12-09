@@ -15,7 +15,8 @@ public class OpcodeParameters {
 		if(opcode.length() > 1 && !opcode.endsWith("99")) {
 			this.command = Integer.parseInt(opcode.substring(opcode.length() - 2, opcode.length()));
 			for(int i = 3; opcode.length() >= i; i++) {
-				ParameterMode mode = opcode.length() >= i && opcode.charAt(opcode.length() - i) == '1'? ParameterMode.IMMEDIATE : ParameterMode.POSITION; 
+				int modeNo = opcode.length() >= i? opcode.charAt(opcode.length() - i)-48 : 0;
+				ParameterMode mode = ParameterMode.get(modeNo);
 				modes.add(mode);
 			}
 		}
@@ -30,6 +31,10 @@ public class OpcodeParameters {
 	
 	public int getParameterValue(int index) {
 		return this.getParameterMode(index).getValue(memory, memory.getOffsetValue(index));
+	}
+	
+	public int getParameterLocation(int index) {
+		return this.getParameterMode(index).getLocation(memory, index);
 	}
 	
 	public ParameterMode getParameterMode(int index) {

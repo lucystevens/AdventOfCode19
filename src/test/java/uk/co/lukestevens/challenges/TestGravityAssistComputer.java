@@ -16,7 +16,7 @@ public class TestGravityAssistComputer {
 	@Test
 	public void testProgram1() {
 		int[] input = {1,0,0,0,99};
-		int[] expected = {2,0,0,0,99};
+		Integer[] expected = {2,0,0,0,99};
 		
 		GravityAssistComputer comp = new GravityAssistComputer(input);
 		assertArrayEquals(expected, comp.run());
@@ -25,7 +25,7 @@ public class TestGravityAssistComputer {
 	@Test
 	public void testProgram2() {
 		int[] input = {2,3,0,3,99};
-		int[] expected = {2,3,0,6,99};
+		Integer[] expected = {2,3,0,6,99};
 		
 		GravityAssistComputer comp = new GravityAssistComputer(input);
 		assertArrayEquals(expected, comp.run());
@@ -34,7 +34,7 @@ public class TestGravityAssistComputer {
 	@Test
 	public void testProgram3() {
 		int[] input = {2,4,4,5,99,0};
-		int[] expected = {2,4,4,5,99,9801};
+		Integer[] expected = {2,4,4,5,99,9801};
 		
 		GravityAssistComputer comp = new GravityAssistComputer(input);
 		assertArrayEquals(expected, comp.run());
@@ -43,7 +43,7 @@ public class TestGravityAssistComputer {
 	@Test
 	public void testProgram4() {
 		int[] input = {1,1,1,4,99,5,6,0,99};
-		int[] expected = {30,1,1,4,2,5,6,0,99};
+		Integer[] expected = {30,1,1,4,2,5,6,0,99};
 		
 		GravityAssistComputer comp = new GravityAssistComputer(input);
 		assertArrayEquals(expected, comp.run());

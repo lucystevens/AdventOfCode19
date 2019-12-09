@@ -11,6 +11,7 @@ import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
 import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
+import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
 import uk.co.lukestevens.utils.Grid;
@@ -87,16 +88,20 @@ public class AdventOfCodeMain {
 		InputFileReader reader = new InputFileReader("Day5");
 		int[] input = reader.readFileAsArrayOfIntegers();
 		
-		IntCodeComputer computer = new IntCodeComputer(input);
-		computer.run(1);
+		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
+		IntCodeComputer computer = factory.createComputer();
+		computer.addInput(1);
+		computer.run();
 	}
 	
 	public static void day5Task2() throws IOException {
 		InputFileReader reader = new InputFileReader("Day5");
 		int[] input = reader.readFileAsArrayOfIntegers();
 		
-		IntCodeComputer computer = new IntCodeComputer(input);
-		computer.run(5);
+		IntCodeComputerFactory factory = new IntCodeComputerFactory(input);
+		IntCodeComputer computer = factory.createComputer();
+		computer.addInput(5);
+		computer.run();
 	}
 	
 	public static void day6Task1() throws IOException {

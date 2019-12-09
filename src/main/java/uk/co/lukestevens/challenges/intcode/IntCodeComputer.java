@@ -1,14 +1,11 @@
 package uk.co.lukestevens.challenges.intcode;
 
-import java.util.List;
 import java.util.function.Consumer;
-
-import uk.co.lukestevens.utils.ListWithCursor;
 
 public class IntCodeComputer {
 	
-	private final int[] program;
 	private IntCodeComputerMemory memory;
+	private InputSource<Integer> inputSource;
 	private Consumer<Integer> outputCallback;
 		
 	public IntCodeComputer(int[] program) {
@@ -16,9 +13,8 @@ public class IntCodeComputer {
 	}
 	
 	public IntCodeComputer(int[] program, Consumer<Integer> outputCallback) {
-		super();
-		this.program = program;
 		this.memory = new IntCodeComputerMemory(program);
+		this.inputSource = new InputSource<>();
 		this.outputCallback = outputCallback;
 	}
 	
@@ -30,31 +26,13 @@ public class IntCodeComputer {
 		return memory;
 	}
 	
-	public IntCodeComputer clone() {
-		return new IntCodeComputer(program);
+	public void addInput(int input) {
+		this.inputSource.add(input);
 	}
 
-	public int run(int noun, int verb) {
-		this.memory = new IntCodeComputerMemory(program);
-		this.memory.setValue(1, noun);
-		this.memory.setValue(2, verb);
-		this.runInternal(new ListWithCursor<>());
-		return this.memory.getValue(0);
-	}
-
-	public int run(int input) {
-		this.memory = new IntCodeComputerMemory(program);
-		return this.runInternal(new ListWithCursor<>(input));
-	}
-	
-	public int run(List<Integer> inputs) {
-		this.memory = new IntCodeComputerMemory(program);
-		return this.runInternal(new ListWithCursor<>(inputs));
-	}
-	
-	int runInternal(ListWithCursor<Integer> inputs) {
+	public int run() {
 		while(this.memory.hasNext()) {
-			Opcode opcode = this.parseOpcode(inputs);
+			Opcode opcode = this.parseOpcode();
 			if(opcode.getAction() == OpcodeAction.WRITE) {
 				this.memory.setValue(opcode.getPositionForValue(), opcode.getValue());
 			}
@@ -72,7 +50,7 @@ public class IntCodeComputer {
 		return 1;
 	}
 	
-	Opcode parseOpcode(ListWithCursor<Integer> inputs) {
+	Opcode parseOpcode() {
 		String opcode = String.valueOf(this.memory.getValue());
 		OpcodeParameters params = new OpcodeParameters(opcode, this.memory);
 		
@@ -80,15 +58,15 @@ public class IntCodeComputer {
 			case 1: {
 				int p1 = params.getParameterValue(1);
 				int p2 = params.getParameterValue(2);
-				return Opcode.write(p1 + p2, memory.getOffsetValue(3), 4);
+				return Opcode.write(p1 + p2, params.getParameterLocation(3), 4);
 			}
 			case 2: {
 				int p1 = params.getParameterValue(1);
 				int p2 = params.getParameterValue(2);
-				return Opcode.write(p1 * p2, memory.getOffsetValue(3), 4);
+				return Opcode.write(p1 * p2, params.getParameterLocation(3), 4);
 			}
 			case 3: {
-				return Opcode.write(inputs.next(), memory.getOffsetValue(1), 2);
+				return Opcode.write(inputSource.get(), params.getParameterLocation(1), 2);
 			}
 			case 4: {
 				int p1 = params.getParameterValue(1);
@@ -118,13 +96,18 @@ public class IntCodeComputer {
 				int p1 = params.getParameterValue(1);
 				int p2 = params.getParameterValue(2);
 				int value = p1 < p2? 1 : 0;
-				return Opcode.write(value, memory.getOffsetValue(3), 4);
+				return Opcode.write(value, params.getParameterLocation(3), 4);
 			}
 			case 8: {
 				int p1 = params.getParameterValue(1);
 				int p2 = params.getParameterValue(2);
 				int value = p1 == p2? 1 : 0;
-				return Opcode.write(value, memory.getOffsetValue(3), 4);
+				return Opcode.write(value, params.getParameterLocation(3), 4);
+			}
+			case 9: {
+				int p1 = params.getParameterValue(1);
+				this.memory.modifyRelativeBase(p1);
+				return Opcode.doNothing(2);
 			}
 			case 99: {
 				return Opcode.halt();

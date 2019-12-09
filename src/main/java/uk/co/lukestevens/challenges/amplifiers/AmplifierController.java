@@ -7,22 +7,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import uk.co.lukestevens.challenges.intcode.AmplifierIntCodeComputer;
+import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
+import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.utils.Utils;
 import uk.co.lukestevens.utils.Wrapper;
 
 public class AmplifierController {
 	
-	private final AmplifierIntCodeComputer computer;
+	private final IntCodeComputerFactory factory;
 	
 	public AmplifierController(int[] program) {
-		this.computer = new AmplifierIntCodeComputer(program);
+		this.factory = new IntCodeComputerFactory(program);
 	}
 	
 	public int run(List<Integer> phaseSettings) {
 		int nextInput = 0;
 		for(int phaseSetting : phaseSettings) {
-			AmplifierIntCodeComputer tempComputer = this.computer.clone();
+			IntCodeComputer tempComputer = this.factory.createComputer();
 			Wrapper<Integer> outputBuffer = new Wrapper<>();
 			
 			tempComputer.setOutputCallback(outputBuffer::set);
@@ -39,9 +40,9 @@ public class AmplifierController {
 		Map<Integer, Integer> outputMap = new HashMap<>();
 		List<Thread> threads = new ArrayList<>();
 		
-		List<AmplifierIntCodeComputer> comps = phaseSettings.stream()
+		List<IntCodeComputer> comps = phaseSettings.stream()
 				.map(phaseSetting -> {
-					AmplifierIntCodeComputer tempComputer = this.computer.clone();
+					IntCodeComputer tempComputer = this.factory.createComputer();
 					tempComputer.addInput(phaseSetting);
 					return tempComputer;
 		}).collect(Collectors.toList());
@@ -49,7 +50,7 @@ public class AmplifierController {
 		comps.get(0).addInput(0);
 		
 		for(int i = 0; i<comps.size(); i++) {
-			AmplifierIntCodeComputer tempComputer = comps.get(i);
+			IntCodeComputer tempComputer = comps.get(i);
 			int nextInt = i <comps.size() - 1 ? i+1 : 0;
 			int thisIndex = i;
 			tempComputer.setOutputCallback(output -> {

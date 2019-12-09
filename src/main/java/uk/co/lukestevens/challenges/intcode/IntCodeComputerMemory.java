@@ -1,41 +1,62 @@
 package uk.co.lukestevens.challenges.intcode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IntCodeComputerMemory {
 	
-	private final int[] memory;
+	private final List<Integer> memory;
 	private final AtomicInteger cursor = new AtomicInteger();
+	private int relativeBase = 0;
 	
 	public IntCodeComputerMemory(int[] program) {
-		this.memory = new int[program.length];
-		for(int i = 0; i<program.length; i++) {
-			memory[i] = program[i];
+		this.memory = new ArrayList<Integer>();
+		for(int i : program) {
+			memory.add(i);
 		}
 	}
 	
+	public void modifyRelativeBase(int offset) {
+		this.relativeBase = this.relativeBase + offset;
+	}
+	
+	protected int getRelativeBase() {
+		return relativeBase;
+	}
+
+	public int getCursorPosition() {
+		return cursor.get();
+	}
+	
+	// Single point of entry
 	public int getValue(int index) {
-		return memory[index];
+		return memory.get(index);
+	}
+	
+	public int getRelativeValue(int offset) {
+		return this.getValue(this.relativeBase + offset);
 	}
 	
 	public int getOffsetValue(int offset) {
-		return memory[cursor.get() + offset];
+		return this.getValue(cursor.get() + offset);
 	}
 	
 	public int getValue() {
-		return memory[cursor.get()];
+		return this.getValue(cursor.get());
 	}
 	
+	// Single point of entry
 	public void setValue(int index, int value) {
-		memory[index] = value;
+		memory.set(index, value);
 	}
 	
 	public void setOffsetValue(int offset, int value) {
-		memory[cursor.get() + offset] = value;
+		this.setValue(cursor.get() + offset, value);
 	}
 	
 	public void setValue(int value) {
-		memory[cursor.get()] = value;
+		this.setValue(cursor.get(), value);
 	}
 	
 	public void incrementCursor(int value) {
@@ -51,11 +72,11 @@ public class IntCodeComputerMemory {
 	}
 	
 	public boolean hasNext() {
-		return cursor.get() < memory.length;
+		return cursor.get() < memory.size();
 	}
 
-	public int[] getBuffer() {
-		return memory;
+	public Integer[] getBuffer() {
+		return memory.toArray(new Integer[0]);
 	}
 	
 	
