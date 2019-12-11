@@ -38,5 +38,9 @@ public class Utils {
 	        items.add(permutation.pop());
 	    }
 	}
+	
+	public static int getGreatestCommonDivisor(int a, int b) {
+		return b==0 ? a : getGreatestCommonDivisor(b, a%b);
+	}
 
 }

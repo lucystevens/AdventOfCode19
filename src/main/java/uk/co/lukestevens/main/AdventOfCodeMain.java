@@ -1,5 +1,6 @@
 package uk.co.lukestevens.main;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +10,8 @@ import uk.co.lukestevens.challenges.GravityAssistComputer;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
+import uk.co.lukestevens.challenges.asteroids.Asteroid;
+import uk.co.lukestevens.challenges.asteroids.AsteroidField;
 import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
@@ -20,7 +23,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day9Task2();
+		day10Task2();
 
 	}
 	
@@ -176,6 +179,31 @@ public class AdventOfCodeMain {
 		IntCodeComputer computer = factory.createComputer();
 		computer.addInput(2L);
 		computer.run();
+	}
+	
+	public static void day10Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day10");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		AsteroidField field = new AsteroidField(input);
+		field.mapPossibleMonitoringStations();
+		
+		Asteroid bestLocation = field.getBestMonitoringStationLocation();
+		System.out.println(bestLocation.getAsteroidsInSight());
+	}
+	
+	public static void day10Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day10");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		AsteroidField field = new AsteroidField(input);
+		field.mapPossibleMonitoringStations();
+		
+		Asteroid bestLocation = field.getBestMonitoringStationLocation();
+		List<Asteroid> blastOrder = field.blastAsteroids(bestLocation);
+		
+		Point point200 = blastOrder.get(199).getPoint();
+		System.out.println((point200.getX()*100) + point200.getY());
 	}
 	
 }
