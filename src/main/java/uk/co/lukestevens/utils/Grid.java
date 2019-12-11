@@ -1,6 +1,7 @@
 package uk.co.lukestevens.utils;
 
 import java.awt.Point;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
@@ -83,14 +84,21 @@ public class Grid<T> {
 	
 	@Override
 	public String toString() {
-		int maxX = (this.stream().map(Entry::getKey).map(Point::getX).sorted((d1, d2) -> (int)(d2-d1)).findFirst().get()).intValue();
-		int maxY = (this.stream().map(Entry::getKey).map(Point::getY).sorted((d1, d2) -> (int)(d2-d1)).findFirst().get()).intValue();
+		
+		Comparator<Double> sortMin = (d1, d2) -> (int)(d1 - d2);
+		Comparator<Double> sortMax = (d1, d2) -> (int)(d2 - d1);
+		
+		int minX = this.stream().map(Entry::getKey).map(Point::getX).sorted(sortMin).findFirst().get().intValue();
+		int minY = this.stream().map(Entry::getKey).map(Point::getY).sorted(sortMin).findFirst().get().intValue();
+		
+		int maxX = this.stream().map(Entry::getKey).map(Point::getX).sorted(sortMax).findFirst().get().intValue();
+		int maxY = this.stream().map(Entry::getKey).map(Point::getY).sorted(sortMax).findFirst().get().intValue();
 		
 		StringBuilder builder = new StringBuilder();
-		for(int y = 0; y <= maxY; y++) {
-			for(int x = 0; x <= maxX; x++) {
+		for(int y = minY; y <= maxY; y++) {
+			for(int x = minX; x <= maxX; x++) {
 				T value = this.get(x, y);
-				builder.append(value == null? " " : value.toString());
+				builder.append(value == null? "X" : value.toString());
 			}
 			builder.append("\n");
 		}

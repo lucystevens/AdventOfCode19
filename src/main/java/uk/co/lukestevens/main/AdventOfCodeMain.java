@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import uk.co.lukestevens.challenges.GravityAssistComputer;
+import uk.co.lukestevens.challenges.HullPaintingRobot;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
@@ -23,7 +24,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day10Task2();
+		day11Task2();
 
 	}
 	
@@ -204,6 +205,24 @@ public class AdventOfCodeMain {
 		
 		Point point200 = blastOrder.get(199).getPoint();
 		System.out.println((point200.getX()*100) + point200.getY());
+	}
+	
+	public static void day11Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day11");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		HullPaintingRobot robot = new HullPaintingRobot(input);
+		robot.paintPanel();
+		System.out.println(robot.getPanelsPainted());
+	}
+	
+	public static void day11Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day11");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		HullPaintingRobot robot = new HullPaintingRobot(input);
+		robot.paintPanel();
+		System.out.println(robot.getHull().toString().replaceAll(" ", "x").replaceAll("X", " "));
 	}
 	
 }
