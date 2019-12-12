@@ -16,6 +16,8 @@ import uk.co.lukestevens.challenges.asteroids.AsteroidField;
 import uk.co.lukestevens.challenges.circuits.Circuit;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
+import uk.co.lukestevens.challenges.moons.Moon;
+import uk.co.lukestevens.challenges.moons.MoonMapper;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
 import uk.co.lukestevens.utils.Grid;
@@ -24,7 +26,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day11Task2();
+		day12Task2();
 
 	}
 	
@@ -223,6 +225,27 @@ public class AdventOfCodeMain {
 		HullPaintingRobot robot = new HullPaintingRobot(input);
 		robot.paintPanel();
 		System.out.println(robot.getHull().toString().replaceAll(" ", "x").replaceAll("X", " "));
+	}
+	
+	public static void day12Task1() {
+		Moon m1 = new Moon(17, -12, 13);
+		Moon m2 = new Moon(2, 1, 1);
+		Moon m3 = new Moon(-1, -17, 7);
+		Moon m4 = new Moon(12, -14, 18);
+		
+		MoonMapper mapper = new MoonMapper(Arrays.asList(m1, m2, m3, m4));
+		mapper.simulateTimeSteps(1000);
+		System.out.println(mapper.getTotalEnergy());
+	}
+	
+	public static void day12Task2() {
+		Moon m1 = new Moon(17, -12, 13);
+		Moon m2 = new Moon(2, 1, 1);
+		Moon m3 = new Moon(-1, -17, 7);
+		Moon m4 = new Moon(12, -14, 18);
+		
+		MoonMapper mapper = new MoonMapper(Arrays.asList(m1, m2, m3, m4));
+		System.out.println(mapper.findStepsToMatchPreviousPoint());
 	}
 	
 }

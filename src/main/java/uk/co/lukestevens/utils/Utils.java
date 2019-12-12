@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+import java.util.function.BiConsumer;
 
 public class Utils {
 	
@@ -41,6 +42,34 @@ public class Utils {
 	
 	public static int getGreatestCommonDivisor(int a, int b) {
 		return b==0 ? a : getGreatestCommonDivisor(b, a%b);
+	}
+	
+	public static <T> void forEachPair(List<T> list, BiConsumer<T, T> method) {
+		for(int i = 0; i<list.size(); i++) {
+			for(int j = i+1; j<list.size(); j++) {
+				method.accept(list.get(i), list.get(j));
+			}
+		}
+	}
+	
+	// TODO Terribly inefficient, pls improve
+	public static long getLowestCommonMultiple(long...nums) {
+		long result = 1;
+		while(true) {
+			if(isDivisible(result, nums)) {
+				return result;
+			}
+			result++;
+		}
+	}
+	
+	public static boolean isDivisible(long toCheck, long...nums) {
+		for(long num : nums) {
+			if(toCheck % num != 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
