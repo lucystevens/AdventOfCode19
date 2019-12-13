@@ -11,6 +11,7 @@ import uk.co.lukestevens.challenges.HullPaintingRobot;
 import uk.co.lukestevens.challenges.PasswordCracker;
 import uk.co.lukestevens.challenges.RocketFuelCalculator;
 import uk.co.lukestevens.challenges.amplifiers.AmplifierController;
+import uk.co.lukestevens.challenges.arcade.ArcadeCabinet;
 import uk.co.lukestevens.challenges.asteroids.Asteroid;
 import uk.co.lukestevens.challenges.asteroids.AsteroidField;
 import uk.co.lukestevens.challenges.circuits.Circuit;
@@ -26,8 +27,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day12Task2();
-
+		day13Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -214,7 +214,7 @@ public class AdventOfCodeMain {
 		Long[] input = reader.readFileAsArrayOfLongs();
 		
 		HullPaintingRobot robot = new HullPaintingRobot(input);
-		robot.paintPanel();
+		robot.paintPanel(0);
 		System.out.println(robot.getPanelsPainted());
 	}
 	
@@ -223,7 +223,7 @@ public class AdventOfCodeMain {
 		Long[] input = reader.readFileAsArrayOfLongs();
 		
 		HullPaintingRobot robot = new HullPaintingRobot(input);
-		robot.paintPanel();
+		robot.paintPanel(1);
 		System.out.println(robot.getHull().toString().replaceAll(" ", "x").replaceAll("X", " "));
 	}
 	
@@ -246,6 +246,23 @@ public class AdventOfCodeMain {
 		
 		MoonMapper mapper = new MoonMapper(Arrays.asList(m1, m2, m3, m4));
 		System.out.println(mapper.findStepsToMatchPreviousPoint());
+	}
+	
+	public static void day13Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day13");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		ArcadeCabinet arcade = new ArcadeCabinet(input);
+		arcade.drawGame();
+		System.out.println(arcade.getBlockTiles());
+	}
+	
+	public static void day13Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day13");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		ArcadeCabinet arcade = new ArcadeCabinet(input);
+		System.out.println(arcade.playGame());
 	}
 	
 }

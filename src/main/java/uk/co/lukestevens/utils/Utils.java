@@ -40,7 +40,7 @@ public class Utils {
 	    }
 	}
 	
-	public static int getGreatestCommonDivisor(int a, int b) {
+	public static long getGreatestCommonDivisor(long a, long b) {
 		return b==0 ? a : getGreatestCommonDivisor(b, a%b);
 	}
 	
@@ -52,8 +52,20 @@ public class Utils {
 		}
 	}
 	
+	private static long lcm(long a, long b) {
+	    return a * (b / getGreatestCommonDivisor(a, b));
+	}
+
+	public static long getLowestCommonMultiple(long...input){
+	    long result = input[0];
+	    for(int i = 1; i < input.length; i++) {
+	    	result = lcm(result, input[i]);
+	    }
+	    return result;
+	}
+	
 	// TODO Terribly inefficient, pls improve
-	public static long getLowestCommonMultiple(long...nums) {
+	public static long getLowestCdommonMultiple(long...nums) {
 		long result = 1;
 		while(true) {
 			if(isDivisible(result, nums)) {

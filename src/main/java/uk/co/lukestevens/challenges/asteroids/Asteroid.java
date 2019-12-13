@@ -47,7 +47,7 @@ public class Asteroid {
 		List<Point> points = new ArrayList<>();
 		int xDiff = (int) Math.abs(this.point.getX() - end.getX());
 		int yDiff = (int) Math.abs(this.point.getY() - end.getY());
-		int divisor = Utils.getGreatestCommonDivisor(xDiff, yDiff);
+		int divisor = (int) Utils.getGreatestCommonDivisor(xDiff, yDiff);
 		
 		int yDirection = this.point.getY() - end.getY() > 0? -1 : 1;
 		int xDirection = this.point.getX() - end.getX() > 0? -1 : 1;

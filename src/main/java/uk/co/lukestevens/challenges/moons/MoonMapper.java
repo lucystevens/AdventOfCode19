@@ -61,7 +61,6 @@ public class MoonMapper {
 			this.simulateTimeStep();
 		}
 		
-		System.out.println("X: " + checkers.get(0).getResonance() + ", Y: " + checkers.get(1).getResonance() + ", Z: " + checkers.get(2).getResonance());
 		return Utils.getLowestCommonMultiple(checkers.get(0).getResonance(), checkers.get(1).getResonance(), checkers.get(2).getResonance());
 	}
 	

@@ -356,6 +356,18 @@ public class TestMoonMapper {
 		// Check total energy
 		assertEquals(1940, mapper.getTotalEnergy());
 	}
+	
+	@Test 
+	public void testTaskOne() {
+		Moon m1 = new Moon(17, -12, 13);
+		Moon m2 = new Moon(2, 1, 1);
+		Moon m3 = new Moon(-1, -17, 7);
+		Moon m4 = new Moon(12, -14, 18);
+		
+		MoonMapper mapper = new MoonMapper(Arrays.asList(m1, m2, m3, m4));
+		mapper.simulateTimeSteps(1000);
+		assertEquals(8960, mapper.getTotalEnergy());
+	}
 
 	@Test
 	public void findStepsToMatchPrevious() {
@@ -377,6 +389,17 @@ public class TestMoonMapper {
 		
 		MoonMapper mapper = new MoonMapper(Arrays.asList(m1, m2, m3, m4));
 		assertEquals(4686774924L, mapper.findStepsToMatchPreviousPoint());
+	}
+	
+	@Test
+	public void testTaskTwo() {
+		Moon m1 = new Moon(17, -12, 13);
+		Moon m2 = new Moon(2, 1, 1);
+		Moon m3 = new Moon(-1, -17, 7);
+		Moon m4 = new Moon(12, -14, 18);
+		
+		MoonMapper mapper = new MoonMapper(Arrays.asList(m1, m2, m3, m4));
+		assertEquals(314917503970904L, mapper.findStepsToMatchPreviousPoint());
 	}
 	
 }

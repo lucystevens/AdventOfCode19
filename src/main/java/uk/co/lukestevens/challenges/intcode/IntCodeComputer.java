@@ -17,6 +17,10 @@ public class IntCodeComputer {
 	public void setOutputCallback(Consumer<Long> outputCallback) {
 		this.outputCallback = outputCallback;
 	}
+	
+	public void useOutputBuffer(OutputBuffer<Long> buffer) {
+		this.outputCallback = buffer::add;
+	}
 
 	public IntCodeComputerMemory getMemory() {
 		return memory;
@@ -96,7 +100,7 @@ public class IntCodeComputer {
 			case 8: {
 				Long p1 = params.getParameterValue(1);
 				Long p2 = params.getParameterValue(2);
-				Long value = p1 == p2? 1L : 0L;
+				Long value = p1.longValue() == p2.longValue()? 1L : 0L;
 				return Opcode.write(value, params.getParameterLocation(3), 4);
 			}
 			case 9: {

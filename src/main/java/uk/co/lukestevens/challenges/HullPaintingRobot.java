@@ -16,12 +16,12 @@ public class HullPaintingRobot {
 		this.factory = new IntCodeComputerFactory(input);
 	}
 	
-	public void paintPanel() {
+	public void paintPanel(long startPanelColour) {
 		IntCodeComputer computer = factory.createComputer();
 		Wrapper<Boolean> isPaintOutput = new Wrapper<>(true);
 		Robot robot = new Robot();
 		
-		computer.addInput(1L);
+		computer.addInput(startPanelColour);
 		computer.setOutputCallback(out -> {
 			if(isPaintOutput.get()) {
 				this.hull.set(robot.getX(), robot.getY(), out == 0L? "X" : " ");
