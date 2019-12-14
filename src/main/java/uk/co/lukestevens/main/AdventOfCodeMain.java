@@ -19,6 +19,8 @@ import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.challenges.moons.Moon;
 import uk.co.lukestevens.challenges.moons.MoonMapper;
+import uk.co.lukestevens.challenges.nanofactory.ChemicalReaction;
+import uk.co.lukestevens.challenges.nanofactory.Nanofactory;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
 import uk.co.lukestevens.utils.Grid;
@@ -27,7 +29,7 @@ import uk.co.lukestevens.utils.InputFileReader;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day13Task2();
+		day14Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -263,6 +265,30 @@ public class AdventOfCodeMain {
 		
 		ArcadeCabinet arcade = new ArcadeCabinet(input);
 		System.out.println(arcade.playGame());
+	}
+	
+	public static void day14Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day14");
+		List<ChemicalReaction> input = reader
+				.readFileAsListOfStrings()
+				.stream()
+				.map(ChemicalReaction::parseReaction)
+				.collect(Collectors.toList());
+		
+		Nanofactory factory = new Nanofactory(input);
+		System.out.println(factory.getOreNeededForOneFuel());
+	}
+	
+	public static void day14Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day14");
+		List<ChemicalReaction> input = reader
+				.readFileAsListOfStrings()
+				.stream()
+				.map(ChemicalReaction::parseReaction)
+				.collect(Collectors.toList());
+		
+		Nanofactory factory = new Nanofactory(input);
+		System.out.println(factory.getFuelProducedFromOre(1000000000000L));
 	}
 	
 }
