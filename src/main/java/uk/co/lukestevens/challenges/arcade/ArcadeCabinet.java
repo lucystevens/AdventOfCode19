@@ -1,6 +1,7 @@
 package uk.co.lukestevens.challenges.arcade;
 
 import java.awt.Font;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -58,8 +59,16 @@ public class ArcadeCabinet {
 		});
 		computer.useOutputBuffer(buffer);
 		
+		Wrapper<Integer> lastBallPosition = new Wrapper<>(0);
 		computer.setInputCallback(() -> {
-			JPanel panel = VisualGrid.getInputView("Score: " + score.get(), this.screen);
+			System.out.println(this.screen
+					.toString()
+					.replace("0", ".")
+					.replace("1", "X")
+					.replace("2", "#")
+					.replace("3", "_")
+					.replace("4", "o"));
+			/*JPanel panel = VisualGrid.getInputView("Score: " + score.get(), this.screen);
 			String input = JOptionPane.showInputDialog(panel);
 			if(input == null) {
 				System.exit(-1);
@@ -67,13 +76,44 @@ public class ArcadeCabinet {
 			
 			Long parsedInput = Long.valueOf(input);
 			inputs.add(parsedInput);
-			return parsedInput;
+			return parsedInput;*/
+			Point currentBallPosition = this.getBallPosition();
+			int currentBumperPosition = (int) this.getBumperPosition().getX();
+			int ballDirection = (int) ((currentBallPosition.getX() - lastBallPosition.get())%2);
+			int nextBallPosition = (int) (currentBallPosition.getX() + ballDirection);
+			
+			if(this.screen.get(nextBallPosition, (int) currentBallPosition.getY()).intValue() > 0){
+				nextBallPosition = (int) currentBallPosition.getX();
+			}
+			
+			int input = (nextBallPosition - currentBumperPosition)%2;
+			System.out.println(input);
+			
+			lastBallPosition.set((int) currentBallPosition.getX());	
+			return 0L;
 		});
 		computer.run();
 		
 		
 		
 		return score.get();
+	}
+	
+	Point getBallPosition() {
+		return this.getObjectPosition(4);
+	}
+	
+	Point getBumperPosition() {
+		return this.getObjectPosition(3);
+	}
+	
+	Point getObjectPosition(int obj) {
+		return this.screen
+				.stream()
+				.filter(e -> e.getValue().equals(obj))
+				.map(Entry::getKey)
+				.findFirst()
+				.get();
 	}
 	
 	public Grid<Integer> getScreen(){
