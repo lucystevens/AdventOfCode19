@@ -4,11 +4,18 @@ import java.awt.Point;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Grid<T> {
 	
 	private final HashMap<Point, T> internalMap = new HashMap<>();
+	
+	protected int minX = 0;
+	protected int minY = 0;
+	protected int maxX = 0;
+	protected int maxY = 0;
+	
 	
     /**
      * Associates the specified value with the specified point in this grid.
@@ -19,7 +26,12 @@ public class Grid<T> {
      * @param value value to be inserted at the specified point
      */
 	public void set(Point point, T value) {
-		this.internalMap.put(point, value);
+		minX = (int) Math.min(minX, point.getX());
+		minY = (int) Math.min(minY, point.getY());
+		maxX = (int) Math.max(maxX, point.getX());
+		maxY = (int) Math.max(maxY, point.getY());
+		
+		this.internalMap.put(new Point(point), value);
 	}
 	
     /**
@@ -43,6 +55,26 @@ public class Grid<T> {
      */
 	public void remove(Point point) {
 		this.internalMap.remove(point);
+		
+		Comparator<Double> sortMin = (d1, d2) -> (int)(d1 - d2);
+		Comparator<Double> sortMax = (d1, d2) -> (int)(d2 - d1);
+		
+		int removedX = (int) point.getX();
+		int removedY = (int) point.getY();
+		
+		if(removedX == this.minX) {
+			this.minX = this.getMinMax(sortMin, Point::getX);
+		}
+		if(removedX == this.maxX) {
+			this.minX = this.getMinMax(sortMax, Point::getX);
+		}
+		if(removedY == this.minY) {
+			this.minX = this.getMinMax(sortMin, Point::getY);
+		}
+		if(removedY == this.maxY) {
+			this.minX = this.getMinMax(sortMax, Point::getY);
+		}
+		
 	}
 	
     /**
@@ -82,18 +114,34 @@ public class Grid<T> {
 		return this.internalMap.entrySet().stream();
 	}
 	
+	int getMinMax(Comparator<Double> sort, Function<Point, Double> axis) {
+		return this.stream()
+				.map(Entry::getKey)
+				.map(axis)
+				.sorted(sort)
+				.findFirst()
+				.orElse(0.0)
+				.intValue();
+	}
+	
+	public int getMinX() {
+		return minX;
+	}
+
+	public int getMinY() {
+		return minY;
+	}
+
+	public int getMaxX() {
+		return maxX;
+	}
+
+	public int getMaxY() {
+		return maxY;
+	}
+
 	@Override
 	public String toString() {
-		
-		Comparator<Double> sortMin = (d1, d2) -> (int)(d1 - d2);
-		Comparator<Double> sortMax = (d1, d2) -> (int)(d2 - d1);
-		
-		int minX = this.stream().map(Entry::getKey).map(Point::getX).sorted(sortMin).findFirst().get().intValue();
-		int minY = this.stream().map(Entry::getKey).map(Point::getY).sorted(sortMin).findFirst().get().intValue();
-		
-		int maxX = this.stream().map(Entry::getKey).map(Point::getX).sorted(sortMax).findFirst().get().intValue();
-		int maxY = this.stream().map(Entry::getKey).map(Point::getY).sorted(sortMax).findFirst().get().intValue();
-		
 		StringBuilder builder = new StringBuilder();
 		for(int y = minY; y <= maxY; y++) {
 			for(int x = minX; x <= maxX; x++) {
@@ -104,5 +152,7 @@ public class Grid<T> {
 		}
 		return builder.toString();
 	}
+	
+	
 
 }

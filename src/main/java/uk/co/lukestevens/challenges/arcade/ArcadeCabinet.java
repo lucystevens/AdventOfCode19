@@ -1,10 +1,19 @@
 package uk.co.lukestevens.challenges.arcade;
 
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.challenges.intcode.OutputBuffer;
+import uk.co.lukestevens.ui.VisualGrid;
 import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.Wrapper;
 
@@ -31,21 +40,12 @@ public class ArcadeCabinet {
 		IntCodeComputer computer = factory.createComputer();
 		computer.getMemory().setValue(0, 2L);
 		
-		for(int i = 0; i<1000; i++) {
-			for(int j = 0; j<50; j++) {
-				computer.addInput(-1L);
-			}
-			for(int j = 0; j<50; j++) {
-				computer.addInput(1L);
-			}
-		}
+		List<Long> inputs = new ArrayList<>();
 		
-		Wrapper<Long> score = new Wrapper<>();
+		Wrapper<Long> score = new Wrapper<>(0L);
 		OutputBuffer<Long> buffer = new OutputBuffer<Long>(3);
 		buffer.setOutputCallback(out -> {
-			System.out.println(out);
 			if(out.get(0).equals(-1L)) {
-				System.out.println("Score: " + out.get(2));
 				score.set(out.get(2));
 			}
 			else {
@@ -57,7 +57,21 @@ public class ArcadeCabinet {
 			}
 		});
 		computer.useOutputBuffer(buffer);
+		
+		computer.setInputCallback(() -> {
+			JPanel panel = VisualGrid.getInputView("Score: " + score.get(), this.screen);
+			String input = JOptionPane.showInputDialog(panel);
+			if(input == null) {
+				System.exit(-1);
+			}
+			
+			Long parsedInput = Long.valueOf(input);
+			inputs.add(parsedInput);
+			return parsedInput;
+		});
 		computer.run();
+		
+		
 		
 		return score.get();
 	}

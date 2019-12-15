@@ -1,16 +1,19 @@
 package uk.co.lukestevens.challenges.intcode;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class IntCodeComputer {
 	
 	private IntCodeComputerMemory memory;
 	private InputSource<Long> inputSource;
 	private Consumer<Long> outputCallback;
+	private Supplier<Long> inputCallback;
 		
 	public IntCodeComputer(Long[] program) {
 		this.memory = new IntCodeComputerMemory(program);
 		this.inputSource = new InputSource<>();
+		this.inputCallback = inputSource::get;
 		this.outputCallback = System.out::println;
 	}
 	
@@ -18,6 +21,10 @@ public class IntCodeComputer {
 		this.outputCallback = outputCallback;
 	}
 	
+	public void setInputCallback(Supplier<Long> inputCallback) {
+		this.inputCallback = inputCallback;
+	}
+
 	public void useOutputBuffer(OutputBuffer<Long> buffer) {
 		this.outputCallback = buffer::add;
 	}
@@ -65,7 +72,7 @@ public class IntCodeComputer {
 				return Opcode.write(p1 * p2, params.getParameterLocation(3), 4);
 			}
 			case 3: {
-				return Opcode.write(inputSource.get(), params.getParameterLocation(1), 2);
+				return Opcode.write(inputCallback.get(), params.getParameterLocation(1), 2);
 			}
 			case 4: {
 				Long p1 = params.getParameterValue(1);
