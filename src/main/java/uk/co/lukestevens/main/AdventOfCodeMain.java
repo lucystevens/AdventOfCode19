@@ -31,7 +31,7 @@ import uk.co.lukestevens.utils.Utils;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day16Task2();
+		day13Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
