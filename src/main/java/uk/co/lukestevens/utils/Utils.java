@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class Utils {
 	
@@ -82,6 +83,14 @@ public class Utils {
 			}
 		}
 		return true;
+	}
+	
+	public static String asString(List<Integer> list) {
+		return list.stream().map(String::valueOf).collect(Collectors.joining());
+	}
+	
+	public static List<Integer> asInts(String string){
+		return string.chars().mapToObj(c -> c-48).collect(Collectors.toList());
 	}
 
 }

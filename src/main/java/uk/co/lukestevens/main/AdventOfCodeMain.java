@@ -15,6 +15,7 @@ import uk.co.lukestevens.challenges.arcade.ArcadeCabinet;
 import uk.co.lukestevens.challenges.asteroids.Asteroid;
 import uk.co.lukestevens.challenges.asteroids.AsteroidField;
 import uk.co.lukestevens.challenges.circuits.Circuit;
+import uk.co.lukestevens.challenges.fft.FlawedFrequencyTransmission;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.challenges.moons.Moon;
@@ -25,11 +26,12 @@ import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
 import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.InputFileReader;
+import uk.co.lukestevens.utils.Utils;
 
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day13Task2();
+		day16Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -289,6 +291,26 @@ public class AdventOfCodeMain {
 		
 		Nanofactory factory = new Nanofactory(input);
 		System.out.println(factory.getFuelProducedFromOre(1000000000000L));
+	}
+	
+	public static void day16Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day16");
+		List<Integer> input = Utils.asInts(reader
+				.readFileAsListOfStrings()
+				.get(0));
+		
+		FlawedFrequencyTransmission ftt = new FlawedFrequencyTransmission();
+		System.out.println(Utils.asString(ftt.processPhases(input, 100)).substring(0, 8));
+	}
+	
+	public static void day16Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day16");
+		List<Integer> input = Utils.asInts(reader
+				.readFileAsListOfStrings()
+				.get(0));
+		
+		FlawedFrequencyTransmission ftt = new FlawedFrequencyTransmission();
+		System.out.println(ftt.decodeSignal(input));
 	}
 	
 }

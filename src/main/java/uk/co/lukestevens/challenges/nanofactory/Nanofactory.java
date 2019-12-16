@@ -59,12 +59,10 @@ public class Nanofactory {
 	public long getFuelProducedFromOre(long oreAmount) {
 		long lowest = oreAmount/this.getOreNeededForOneFuel();
 		long highest = lowest*2L;
-		System.out.println("Start with range: " + lowest + " - " + highest);
 		
 		long midpoint = 0;
 		while(highest-lowest > 1) {
 			midpoint = lowest+((highest-lowest)/2);
-			System.out.println(midpoint);
 			long oreNeeded = this.getOreNeededForFuel(midpoint);
 			if(oreNeeded > oreAmount) {
 				highest = midpoint;
