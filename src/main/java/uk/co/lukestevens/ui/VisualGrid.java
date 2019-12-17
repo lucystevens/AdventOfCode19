@@ -22,7 +22,7 @@ public class VisualGrid{
 					.replace("4", "o");
 					
 			JLabel label = new JLabel(line);
-			label.setFont(new Font("Consolas", Font.PLAIN, 24));
+			label.setFont(new Font("Consolas", Font.PLAIN, 20));
 			panel.add(label);
 		}
 		

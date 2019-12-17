@@ -107,11 +107,21 @@ public class Grid<T> {
 		return this.get(new Point(x, y));
 	}
 	
+	public T get(double x, double y) {
+		return this.get((int)x, (int)y);
+	}
+	
 	/**
 	 * @return A sequential stream with the collection backing this Grid as it's source
 	 */
 	public Stream<Entry<Point, T>> stream(){
 		return this.internalMap.entrySet().stream();
+	}
+	
+	public Grid<T> deepClone(){
+		Grid<T> clone = new Grid<>();
+		this.stream().forEach(e -> clone.set(e.getKey(), e.getValue()));
+		return clone;
 	}
 	
 	int getMinMax(Comparator<Double> sort, Function<Point, Double> axis) {

@@ -23,6 +23,7 @@ import uk.co.lukestevens.challenges.moons.MoonMapper;
 import uk.co.lukestevens.challenges.nanofactory.ChemicalReaction;
 import uk.co.lukestevens.challenges.nanofactory.Nanofactory;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
+import uk.co.lukestevens.challenges.scaffold.ScaffoldMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
 import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.InputFileReader;
@@ -31,7 +32,7 @@ import uk.co.lukestevens.utils.Utils;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day13Task2();
+		day17Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -311,6 +312,24 @@ public class AdventOfCodeMain {
 		
 		FlawedFrequencyTransmission ftt = new FlawedFrequencyTransmission();
 		System.out.println(ftt.decodeSignal(input));
+	}
+	
+	public static void day17Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day17");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		ScaffoldMap map = new ScaffoldMap(input);
+		System.out.println(map.getAlignmentSum());
+	}
+	
+	public static void day17Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day17");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		ScaffoldMap map = new ScaffoldMap(input);
+		
+		// Mapped functions manually
+		System.out.println(map.moveVacuumRobot("A,B,A,C,B,A,C,A,C,B", "L,12,L,8,L,8", "L,12,R,4,L,12,R,6", "R,4,L,12,L,12,R,6"));
 	}
 	
 }
