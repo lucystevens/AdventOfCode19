@@ -1,20 +1,11 @@
 package uk.co.lukestevens.challenges.arcade;
 
-import java.awt.Font;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map.Entry;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
 import uk.co.lukestevens.challenges.intcode.OutputBuffer;
-import uk.co.lukestevens.ui.VisualGrid;
 import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.Wrapper;
 
@@ -37,11 +28,9 @@ public class ArcadeCabinet {
 		computer.run();
 	}
 	
-	public long playGame() {
+	public long playGame(final boolean print) {
 		IntCodeComputer computer = factory.createComputer();
 		computer.getMemory().setValue(0, 2L);
-		
-		List<Long> inputs = new ArrayList<>();
 		
 		Wrapper<Long> score = new Wrapper<>(0L);
 		OutputBuffer<Long> buffer = new OutputBuffer<Long>(3);
@@ -59,53 +48,29 @@ public class ArcadeCabinet {
 		});
 		computer.useOutputBuffer(buffer);
 		
-		Wrapper<Point> lastBallPosition = new Wrapper<>();
-		Wrapper<Point> predictedNextPosition = new Wrapper<>();
 		computer.setInputCallback(() -> {
-			System.out.println(this.screen
-					.toString()
-					.replace("0", ".")
-					.replace("1", "X")
-					.replace("2", "#")
-					.replace("3", "_")
-					.replace("4", "o"));
-			/*JPanel panel = VisualGrid.getInputView("Score: " + score.get(), this.screen);
-			String input = JOptionPane.showInputDialog(panel);
-			
-			if(input == null || input.isEmpty()) {
-				inputs.add(0L);
-				return 0L;
-			};
-			
-			Long result = input.startsWith("a")? -1L : 1L;
-			inputs.add(result);
-			return result;*/
+			if(print) {
+				System.out.println(this.screen
+						.toString()
+						.replace("0", ".")
+						.replace("1", "X")
+						.replace("2", "#")
+						.replace("3", "_")
+						.replace("4", "o"));
+			}
 			Point currentBallPosition = this.getBallPosition();
-			if(lastBallPosition.isNull()) {
-				lastBallPosition.set(currentBallPosition);
+			int currentBumperPosition = this.getBumperPosition();
+			Point nextBallPosition = this.getNextBallPosition(computer);
+			
+			if(nextBallPosition == null) {
 				return 0L;
 			}
-			int currentBumperPosition = this.getBumperPosition();
-			Point nextBallPosition = this.getNextBallPosition(lastBallPosition.get());
 			
 			int input = this.normalise((int) (nextBallPosition.getX() - currentBumperPosition));
 			if(this.screen.get((int) currentBallPosition.getX(), (int) (currentBallPosition.getY()+1)).intValue() == 3) {
 				input = 0;
-				System.out.println("About to hit bumper");
 			}
-			
-			System.out.println("Ball x: " + currentBallPosition.getX() +
-					"\tNext x: " + nextBallPosition.getX() +
-					"\tBumper x: " + currentBumperPosition +
-					"\tInput: " + input);
-			System.out.println();
-			
-			if(!predictedNextPosition.isNull() &&!currentBallPosition.equals(predictedNextPosition.get())) {
-				System.err.println("Predicted position doesn't meet actual position");
-			}
-			predictedNextPosition.set(nextBallPosition);
-			
-			lastBallPosition.set(currentBallPosition);	
+				
 			return (long) input;
 		});
 		computer.run();
@@ -113,43 +78,22 @@ public class ArcadeCabinet {
 		return score.get();
 	}
 	
-	Point getNextBallPosition(Point lastPosition) {
-		Point currentPosition = this.getBallPosition();
-		int xDirection = this.normalise((int) (currentPosition.getX() - lastPosition.getX()));
-		int yDirection = this.normalise((int) (currentPosition.getY() - lastPosition.getY()));
+	Point getNextBallPosition(IntCodeComputer computer) {
+		IntCodeComputer ai = computer.deepClone();
 		
-		Integer valueAtNextPosition = this.screen.get(
-				(int)(currentPosition.getX() + xDirection),
-				(int)(currentPosition.getY() + yDirection));
+		Wrapper<Point> ballPosition = new Wrapper<>();
+		OutputBuffer<Long> buffer = new OutputBuffer<Long>(3);
+		buffer.setOutputCallback(out -> {
+			if(out.get(0).intValue() > -1 && out.get(2).intValue() == 4) {
+				ballPosition.set(new Point(out.get(0).intValue(), out.get(1).intValue()));
+				ai.halt();
+			}
+		});
 		
-		Integer valueAtNextXPosition = this.screen.get(
-				(int)(currentPosition.getX() + xDirection),
-				(int)(currentPosition.getY()));
-		
-		Integer valueAtNextYPosition = this.screen.get(
-				(int)(currentPosition.getX()),
-				(int)(currentPosition.getY() + yDirection));
-		
-		if(valueAtNextXPosition*valueAtNextYPosition>0) {
-			return new Point((int)(currentPosition.getX() - xDirection),
-					(int)(currentPosition.getY() - yDirection));
-		}
-		else if(valueAtNextXPosition.intValue() > 0) {
-			return new Point((int)(currentPosition.getX() - xDirection),
-					(int)(currentPosition.getY() + yDirection));
-		}
-		else if(valueAtNextYPosition.intValue() > 0) {
-			return new Point((int)(currentPosition.getX() + xDirection),
-					(int)(currentPosition.getY() - yDirection));
-		}
-		else if(valueAtNextPosition > 0) {
-			return new Point((int)(currentPosition.getX() - xDirection),
-					(int)(currentPosition.getY() - yDirection));
-		}
-		else {
-			return new Point((int)(currentPosition.getX() + xDirection),
-					(int)(currentPosition.getY() + yDirection));
-		}
+		ai.useOutputBuffer(buffer);
+		ai.setInputCallback(() -> 0L);
+		ai.run();
+		return ballPosition.get();
 	}
 	
 	Point getBallPosition() {

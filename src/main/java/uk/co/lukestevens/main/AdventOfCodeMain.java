@@ -32,7 +32,7 @@ import uk.co.lukestevens.utils.Utils;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day17Task2();
+		day13Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -267,7 +267,7 @@ public class AdventOfCodeMain {
 		Long[] input = reader.readFileAsArrayOfLongs();
 		
 		ArcadeCabinet arcade = new ArcadeCabinet(input);
-		System.out.println(arcade.playGame());
+		System.out.println(arcade.playGame(true));
 	}
 	
 	public static void day14Task1() throws IOException {

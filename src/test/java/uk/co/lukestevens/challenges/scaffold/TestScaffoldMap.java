@@ -33,7 +33,6 @@ public class TestScaffoldMap {
 	public void testGetAlignmentSum() {
 		ScaffoldMap map = new ScaffoldMap(input);
 		assertEquals(6244, map.getAlignmentSum());
-		System.out.println(map.getMap());
 	}
 
 }

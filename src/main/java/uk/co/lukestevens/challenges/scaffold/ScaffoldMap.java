@@ -6,14 +6,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import uk.co.lukestevens.challenges.intcode.IntCodeComputer;
 import uk.co.lukestevens.challenges.intcode.IntCodeComputerFactory;
-import uk.co.lukestevens.challenges.robot.Direction;
-import uk.co.lukestevens.challenges.robot.Robot;
-import uk.co.lukestevens.ui.VisualGrid;
 import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.Wrapper;
 

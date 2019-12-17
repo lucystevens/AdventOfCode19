@@ -9,12 +9,25 @@ public class IntCodeComputer {
 	private InputSource<Long> inputSource;
 	private Consumer<Long> outputCallback;
 	private Supplier<Long> inputCallback;
+	private boolean halted = false;
 		
 	public IntCodeComputer(Long[] program) {
-		this.memory = new IntCodeComputerMemory(program);
-		this.inputSource = new InputSource<>();
+		this(new IntCodeComputerMemory(program), new InputSource<>());
 		this.inputCallback = inputSource::get;
 		this.outputCallback = System.out::println;
+	}
+	
+	private IntCodeComputer(IntCodeComputerMemory memory, InputSource<Long> inputSource) {
+		this.memory = memory;
+		this.inputSource = inputSource;
+		this.inputCallback = inputSource::get;
+		this.outputCallback = System.out::println;
+	}
+
+
+
+	public IntCodeComputer deepClone() {
+		return new IntCodeComputer(memory.deepClone(), inputSource.deepClone(l->l.longValue()));
 	}
 	
 	public void setOutputCallback(Consumer<Long> outputCallback) {
@@ -38,7 +51,7 @@ public class IntCodeComputer {
 	}
 
 	public void run() {
-		while(true) {
+		while(!halted) {
 			Opcode opcode = this.parseOpcode();
 			if(opcode.getAction() == OpcodeAction.WRITE) {
 				this.memory.setValue(opcode.getPositionForValue(), opcode.getValue());
@@ -122,6 +135,10 @@ public class IntCodeComputer {
 				throw new RuntimeException("Command " + params.getCommand() + " is not recognised");
 			}
 		}
+	}
+	
+	public void halt() {
+		this.halted = true;
 	}
 
 

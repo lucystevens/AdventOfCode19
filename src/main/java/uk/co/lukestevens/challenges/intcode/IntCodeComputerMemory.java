@@ -3,6 +3,7 @@ package uk.co.lukestevens.challenges.intcode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class IntCodeComputerMemory {
 	
@@ -15,6 +16,17 @@ public class IntCodeComputerMemory {
 		for(Long i : program) {
 			memory.add(i);
 		}
+	}
+	
+	private IntCodeComputerMemory(List<Long> memory, int cursor, int relativeBase) {
+		this.memory = memory;
+		this.cursor.set(cursor);
+		this.relativeBase = relativeBase;
+	}
+	
+	public IntCodeComputerMemory deepClone() {
+		List<Long> memoryCopy = memory.stream().map(Long::longValue).collect(Collectors.toList());
+		return new IntCodeComputerMemory(memoryCopy, cursor.get(), relativeBase);
 	}
 	
 	public void modifyRelativeBase(int offset) {

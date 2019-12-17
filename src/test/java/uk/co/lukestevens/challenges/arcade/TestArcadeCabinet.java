@@ -27,6 +27,10 @@ public class TestArcadeCabinet {
 		assertEquals(324,  arcade.getBlockTiles());
 	}
 	
-	
+	@Test
+	public void testPlayGame() {
+		ArcadeCabinet arcade = new ArcadeCabinet(input);
+		assertEquals(15957, arcade.playGame(false));
+	}
 
 }
