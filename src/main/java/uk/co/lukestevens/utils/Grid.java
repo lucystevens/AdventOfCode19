@@ -152,11 +152,15 @@ public class Grid<T> {
 
 	@Override
 	public String toString() {
+		return this.toString(" ");
+	}
+	
+	public String toString(String nulls) {
 		StringBuilder builder = new StringBuilder();
 		for(int y = minY; y <= maxY; y++) {
 			for(int x = minX; x <= maxX; x++) {
 				T value = this.get(x, y);
-				builder.append(value == null? "X" : value.toString());
+				builder.append(value == null? nulls : value.toString());
 			}
 			builder.append("\n");
 		}

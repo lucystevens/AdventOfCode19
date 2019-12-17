@@ -23,6 +23,7 @@ import uk.co.lukestevens.challenges.moons.MoonMapper;
 import uk.co.lukestevens.challenges.nanofactory.ChemicalReaction;
 import uk.co.lukestevens.challenges.nanofactory.Nanofactory;
 import uk.co.lukestevens.challenges.orbits.OrbitalMap;
+import uk.co.lukestevens.challenges.oxygen.RepairDroidController;
 import uk.co.lukestevens.challenges.scaffold.ScaffoldMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
 import uk.co.lukestevens.utils.Grid;
@@ -32,7 +33,7 @@ import uk.co.lukestevens.utils.Utils;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day13Task2();
+		day15Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -292,6 +293,23 @@ public class AdventOfCodeMain {
 		
 		Nanofactory factory = new Nanofactory(input);
 		System.out.println(factory.getFuelProducedFromOre(1000000000000L));
+	}
+	
+	public static void day15Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day15");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		RepairDroidController controller = new RepairDroidController(input);
+		Point oxygenTank = controller.getOxygenTank();
+		System.out.println(controller.findShortestRoute(new Point(0,0), oxygenTank));
+	}
+	
+	public static void day15Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day15");
+		Long[] input = reader.readFileAsArrayOfLongs();
+		
+		RepairDroidController controller = new RepairDroidController(input);
+		System.out.println(controller.getTimeToSpreadOxygen());
 	}
 	
 	public static void day16Task1() throws IOException {
