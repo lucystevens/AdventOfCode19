@@ -26,6 +26,8 @@ import uk.co.lukestevens.challenges.orbits.OrbitalMap;
 import uk.co.lukestevens.challenges.oxygen.RepairDroidController;
 import uk.co.lukestevens.challenges.scaffold.ScaffoldMap;
 import uk.co.lukestevens.challenges.spaceimage.SpaceImage;
+import uk.co.lukestevens.challenges.tunnels.QuadTunnelMapper;
+import uk.co.lukestevens.challenges.tunnels.SingleTunnelMapper;
 import uk.co.lukestevens.utils.Grid;
 import uk.co.lukestevens.utils.InputFileReader;
 import uk.co.lukestevens.utils.Utils;
@@ -33,7 +35,7 @@ import uk.co.lukestevens.utils.Utils;
 public class AdventOfCodeMain {
 
 	public static void main(String[] args) throws IOException {
-		day15Task2();
+		day18Task2();
 	}
 	
 	public static void day1Task1() throws IOException {
@@ -348,6 +350,22 @@ public class AdventOfCodeMain {
 		
 		// Mapped functions manually
 		System.out.println(map.moveVacuumRobot("A,B,A,C,B,A,C,A,C,B", "L,12,L,8,L,8", "L,12,R,4,L,12,R,6", "R,4,L,12,L,12,R,6"));
+	}
+	
+	public static void day18Task1() throws IOException {
+		InputFileReader reader = new InputFileReader("Day18");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		SingleTunnelMapper mapper = new SingleTunnelMapper(input);
+		System.out.println(mapper.findQuickestRouteToCollectAllKeys());
+	}
+	
+	public static void day18Task2() throws IOException {
+		InputFileReader reader = new InputFileReader("Day18-2");
+		List<String> input = reader.readFileAsListOfStrings();
+		
+		QuadTunnelMapper mapper = new QuadTunnelMapper(input);
+		System.out.println(mapper.findQuickestRouteToCollectAllKeys());
 	}
 	
 }
